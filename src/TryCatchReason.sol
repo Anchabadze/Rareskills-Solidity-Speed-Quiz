@@ -7,11 +7,12 @@ interface IRare {
 
 contract TryCatchReason {
     function main(address a, uint256 x) public returns (bytes memory) {
-        // use try catch to call "a.rare(x)" where x is a uint256
-        // rare(uint256) does not return anything
-        // if the call doesn't revert, return an empty string
-        // if the call reverts, return the reason of the revert
-        // you will need to create the interface yourself
-
-   }
+        try IRare(a).rare(x) {
+            return "";
+        } catch Error(string memory reason) {
+            return abi.encodeWithSelector(bytes4(keccak256("Error(string)")), reason);
+        } catch (bytes memory lowLevelData) {
+            return lowLevelData;
+        }
+    }
 }

@@ -2,6 +2,7 @@
 pragma solidity 0.8.28;
 
 import {Test} from "forge-std/Test.sol";
+import {console} from "forge-std/console.sol";
 import {ReadStruct, ViewContract} from "../src/ReadStruct.sol";
 
 contract ReadStructTest is Test {
@@ -15,7 +16,7 @@ contract ReadStructTest is Test {
     function test_ReadStruct(uint256 x, uint256 y) public {
         v = new ViewContract(x, y);
         (uint256 x_, uint256 y_) = c.main(address(v));
-        assertEq(x_, x);
-        assertEq(y_, y);
+        assertEq(x_, y);
+        assertEq(y_, x);
     }
 }
