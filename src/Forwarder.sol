@@ -6,8 +6,9 @@ import {Address} from "@openzeppelin/contracts/utils/Address.sol";
 
 contract YourContract {
     function main(address target, address forwarder) public {
-        // make the right function call such that YourContract gets 100 tokens
-        // you may only modify this function
+        bytes memory data = abi.encodeWithSelector(Target.giveTokens.selector, address(this));
+
+        Forwarder(forwarder).forward(target, data);
     }
 }
 
